@@ -74,6 +74,26 @@
   .display-glow {
     text-shadow: 0 0 90px rgba(216, 171, 85, 0.22);
   }
+
+  /* HUD chip used inside sensing scenes */
+  .hud-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-amber-gold/30 bg-midnight/85 px-3 py-1.5 text-[0.65rem] md:text-xs tracking-wide text-amber-gold backdrop-blur-sm whitespace-nowrap;
+  }
+
+  /* Masked line reveal: wrap each line in .reveal-mask > .reveal-line */
+  .reveal-mask {
+    @apply overflow-hidden;
+  }
+  .reveal-line {
+    display: inline-block;
+    will-change: transform;
+  }
+}
+
+/* SVG groups that spin/scale around their own centre */
+.svg-origin-center {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @layer utilities {
@@ -92,6 +112,31 @@
   .animate-slide-to-dock {
     animation: slide-to-dock 3s ease-in-out infinite;
   }
+
+  .animate-spin-slow {
+    animation: spin-360 2.2s linear infinite;
+  }
+
+  .animate-spin-slower {
+    animation: spin-360 7s linear infinite;
+  }
+
+  .animate-scan-rotate {
+    animation: spin-360 7s linear infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 4.5s ease-in-out infinite;
+  }
+}
+
+@keyframes spin-360 {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.85; }
 }
 
 @keyframes float {

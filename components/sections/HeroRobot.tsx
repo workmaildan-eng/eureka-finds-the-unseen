@@ -7,7 +7,8 @@ import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Button } from "@/components/ui/Button";
-import { RobotSVG, SunlitRoom, DustCluster } from "@/components/ui/scenes";
+import { SunlitRoom, DustCluster } from "@/components/ui/scenes";
+import { RobotTopView } from "@/components/visuals/RobotTopView";
 
 registerGSAP();
 
@@ -86,7 +87,12 @@ export function HeroRobot() {
           className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-10 will-change-transform"
         >
           <div className="relative w-44 h-44 md:w-60 md:h-60">
-            <RobotSVG className="w-full h-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]" />
+            {/* Grounding floor shadow */}
+            <div
+              className="absolute inset-x-[8%] -bottom-2 h-6 rounded-full bg-black/40 blur-md"
+              aria-hidden="true"
+            />
+            <RobotTopView className="relative w-full h-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]" />
             {/* Sensor light ring */}
             <div
               ref={sensorRef}

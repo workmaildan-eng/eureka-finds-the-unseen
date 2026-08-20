@@ -6,7 +6,7 @@ import { gsap, registerGSAP } from "@/lib/gsap";
 import { campaignData } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { GradientThumb } from "@/components/ui/scenes";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -124,13 +124,16 @@ function TimelineCard({
           : "border-charcoal/10 bg-charcoal/5"
       }`}
     >
-      <div className={`relative ${highlight ? "h-48" : "h-36"} overflow-hidden`}>
-        <PlaceholderImage
-          src={item.thumbnail}
-          alt={`Timeline milestone ${item.date}`}
-          fill
-          className="object-cover"
-          label={`Timeline ${item.date}`}
+      <div
+        className={`relative ${highlight ? "h-48" : "h-36"} overflow-hidden`}
+        role="img"
+        aria-label={`Timeline milestone ${item.date} — KOL content placeholder`}
+      >
+        <GradientThumb
+          label={item.date}
+          index={highlight ? 0 : 1}
+          dark={false}
+          className="absolute inset-0"
         />
         {highlight && (
           <div className="absolute top-3 right-3 bg-amber-gold text-midnight text-xs font-bold px-2 py-1 rounded-full">

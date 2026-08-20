@@ -96,14 +96,31 @@ export function EurekaOrigin() {
             <div ref={ripple3Ref} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-amber-gold/15" />
           </div>
 
-          {/* Archimedes silhouette */}
+          {/* Archimedes — sculptural silhouette seated at the bath's edge */}
           <div
             ref={sculptureRef}
-            className="absolute bottom-[20%] right-[20%] w-24 h-48 opacity-0"
+            className="absolute bottom-[18%] right-[16%] w-32 md:w-44 opacity-0"
             aria-hidden="true"
           >
-            <div className="w-full h-full bg-gradient-to-t from-charcoal/40 to-transparent rounded-t-full" />
+            <svg viewBox="0 0 160 200" className="w-full">
+              {/* Seated figure, leaning toward the water in thought */}
+              <path
+                d="M 96 26 a 15 15 0 1 1 -0.1 0 Z
+                   M 84 46 Q 104 52 106 74 L 104 102 Q 118 108 122 126 L 126 154 L 112 158 L 104 132 Q 88 124 76 128 L 52 138 Q 36 142 32 128 Q 30 116 44 110 L 70 102 L 72 76 Q 72 54 84 46 Z"
+                fill="rgba(23,23,28,0.42)"
+              />
+              {/* Marble plinth */}
+              <rect x="24" y="158" width="112" height="10" rx="3" fill="rgba(23,23,28,0.28)" />
+              <rect x="34" y="168" width="92" height="26" rx="3" fill="rgba(23,23,28,0.18)" />
+            </svg>
+            {/* Light and mist through which the figure appears */}
+            <div className="absolute -inset-6 bg-gradient-to-t from-stone-light/60 via-transparent to-stone-light/30 blur-md" />
           </div>
+
+          {/* Floating fragments drifting at varied parallax */}
+          <div className="absolute top-[26%] left-[24%] w-3 h-3 rotate-12 bg-stone-light/70 animate-float" aria-hidden="true" />
+          <div className="absolute top-[38%] right-[32%] w-2 h-2 -rotate-6 bg-amber-gold/40 animate-float" style={{ animationDelay: "1.2s" }} aria-hidden="true" />
+          <div className="absolute top-[55%] left-[38%] w-2.5 h-2.5 rotate-45 bg-stone-light/50 animate-float" style={{ animationDelay: "2.1s" }} aria-hidden="true" />
 
           {/* Warm sunlight wash */}
           <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-amber-gold/15 to-transparent" />

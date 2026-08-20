@@ -73,22 +73,18 @@ export function UnseenHome() {
           aria-hidden="true"
         >
           {hotspots.map((spot, i) => (
-            <DustCluster
-              key={spot.id}
-              seed={11 + i * 13}
-              count={12}
-              glow
-              className="absolute w-40 h-28 -translate-x-1/2 -translate-y-1/2"
-              // style via wrapper below
-            />
-          ))}
-          {/* Position wrappers */}
-          {hotspots.map((spot) => (
             <div
-              key={`pos-${spot.id}`}
+              key={spot.id}
               className="absolute w-40 h-28 -translate-x-1/2 -translate-y-1/2"
               style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-            />
+            >
+              <DustCluster
+                seed={11 + i * 13}
+                count={12}
+                glow
+                className="absolute inset-0"
+              />
+            </div>
           ))}
         </div>
 

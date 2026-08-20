@@ -7,7 +7,7 @@ import { gsap, registerGSAP } from "@/lib/gsap";
 import { campaignData } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { GradientThumb, AvatarMark } from "@/components/ui/scenes";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -84,13 +84,15 @@ function CreatorCard({
 }) {
   return (
     <article className="group rounded-2xl overflow-hidden bg-charcoal/40 border border-warm-white/5 hover:border-amber-gold/20 transition-colors duration-500">
-      <div className="relative h-48 overflow-hidden">
-        <PlaceholderImage
-          src={creator.thumbnail}
-          alt={`${creator.name} video thumbnail`}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-700"
-          label="Creator Video"
+      <div
+        className="relative h-48 overflow-hidden"
+        role="img"
+        aria-label={`${creator.name} video thumbnail placeholder`}
+      >
+        <GradientThumb
+          label={creator.platform}
+          index={parseInt(creator.id.replace(/\D/g, ""), 10) || 0}
+          className="absolute inset-0 group-hover:scale-105 transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -102,15 +104,7 @@ function CreatorCard({
 
       <div className="p-5">
         <div className="flex items-center gap-3 mb-3">
-          <div className="relative w-10 h-10 rounded-full overflow-hidden bg-charcoal flex-shrink-0">
-            <PlaceholderImage
-              src={creator.avatar}
-              alt={`${creator.name} avatar`}
-              fill
-              className="object-cover"
-              label="Avatar"
-            />
-          </div>
+          <AvatarMark name={creator.name} className="w-10 h-10 flex-shrink-0 text-sm" />
           <div>
             <p className="text-sm font-medium text-warm-white">{creator.name}</p>
             <p className="text-xs text-warm-white/50">

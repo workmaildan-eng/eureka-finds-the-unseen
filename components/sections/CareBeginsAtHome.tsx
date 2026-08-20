@@ -6,7 +6,7 @@ import { gsap, registerGSAP } from "@/lib/gsap";
 import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { StoryArt } from "@/components/ui/scenes";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 registerGSAP();
@@ -116,13 +116,14 @@ function StoryCard({
     <div
       className={`relative ${fullScreen ? "h-full" : "rounded-2xl overflow-hidden"} bg-charcoal/5`}
     >
-      <div className={`relative ${fullScreen ? "h-[60%]" : "h-48 md:h-64"}`}>
-        <PlaceholderImage
-          src={story.image}
-          alt={story.imageAlt}
-          fill
-          className="object-cover"
-          label={story.title}
+      <div
+        className={`relative ${fullScreen ? "h-[60%]" : "h-48 md:h-64"}`}
+        role="img"
+        aria-label={story.imageAlt}
+      >
+        <StoryArt
+          variant={story.id === "story-01" ? "home" : story.id === "story-02" ? "hand" : "share"}
+          className="absolute inset-0"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent" />
       </div>

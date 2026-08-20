@@ -2,7 +2,9 @@
 
 import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { RoomScene } from "@/components/visuals/RoomScene";
+import { DockScene } from "@/components/visuals/DockScene";
+import { DustCluster } from "@/components/ui/scenes";
 import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -16,53 +18,30 @@ export function FinalCTA() {
       className="relative min-h-screen flex flex-col"
       aria-label="Final call to action"
     >
-      {/* Warm home scene */}
-      <div className="relative flex-1 min-h-[70vh] overflow-hidden">
-        <PlaceholderImage
-          src={campaignData.assets.heroPoster}
-          alt="Warm spotless home at end of day with J15 Max Ultra resting beside base station"
-          fill
-          className="object-cover"
-          label="Final Home Scene"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/30 to-transparent" />
+      {/* Warm dusk home, robot resting at its dock */}
+      <div className="relative flex-1 min-h-[100svh] overflow-hidden">
+        <RoomScene mood="dusk" detectionOpacity={0} />
+        <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/40 to-midnight/30" />
 
-        {/* Amber light atmosphere */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-amber-gold/30 animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${5 + Math.random() * 4}s`,
-              }}
-            />
-          ))}
-        </div>
+        {/* Dust transformed into ambient amber light */}
+        <DustCluster seed={31} count={20} glow className="absolute inset-0 opacity-70" />
 
-        {/* Product resting */}
-        <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-32 h-32 md:w-48 md:h-48 opacity-80">
-          <PlaceholderImage
-            src={campaignData.assets.heroRobot}
-            alt="J15 Max Ultra resting beside base station"
-            fill
-            className="object-contain"
-            label="Robot at Rest"
-          />
+        {/* Product at rest beside its base station */}
+        <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-64 md:w-80 opacity-95">
+          <div className="absolute inset-x-[16%] bottom-[10%] h-[55%] rounded-full bg-amber-gold/10 blur-2xl" aria-hidden="true" />
+          <DockScene variant="hero" className="relative w-full drop-shadow-[0_30px_44px_rgba(0,0,0,0.55)]" />
         </div>
 
         {/* Copy overlay */}
         <div className="absolute inset-x-0 top-24 md:top-32 px-4 text-center z-10">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-warm-white tracking-tight">
+            <p className="eyebrow mb-5">{campaign.hashtag}</p>
+            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-semibold text-warm-white tracking-[-0.02em] display-glow">
               {t(finalCta.headline, locale)}
             </h2>
             <div className="mt-6 space-y-2 max-w-xl mx-auto">
               {finalCta.supporting.map((line, i) => (
-                <p key={i} className="text-base md:text-lg text-warm-white/70">
+                <p key={i} className="text-base md:text-lg text-warm-white/70 font-light">
                   {locale === "zh-Hant" ? line.zh : line.en}
                 </p>
               ))}

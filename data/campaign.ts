@@ -15,6 +15,13 @@ export interface ProductFeature {
   chineseDescription: string;
   legalNote?: string;
   visualAlt: string;
+  /** Short sensing-interface labels shown as HUD chips inside the feature scene. */
+  hudLabels?: string[];
+}
+
+export interface SelfCleanStep {
+  id: string;
+  label: string;
 }
 
 export interface Creator {
@@ -224,6 +231,27 @@ export const campaignData = {
       "Performance claims and specifications may vary by market. Confirm local approved claims before publishing. Source material may reference 21,600Pa in specification areas.",
     availabilityNote:
       "Certain app-controlled and OTA-enabled features may vary by market and availability.",
+    entry: {
+      eyebrow: { en: "The Answer to the Unseen", zh: "回應那些被忽略的" },
+      detectionLabels: ["Dust trail", "Pet hair", "Corner debris"],
+    },
+    findUnseenCta: { en: "Find the Unseen", zh: "Find the Unseen" },
+    selfClean: {
+      steps: [
+        { id: "wash", label: "Mop washing" },
+        { id: "dry", label: "Mop drying" },
+        { id: "refill", label: "Clean-water refill" },
+        { id: "drain", label: "Dirty-water draining" },
+        { id: "empty", label: "Dust emptying" },
+        { id: "charge", label: "Charging" },
+        { id: "tray", label: "Base-tray self-cleaning" },
+        { id: "debris", label: "Debris collection" },
+      ] as SelfCleanStep[],
+      flexiRazor: {
+        name: "FlexiRazor",
+        note: "High-density blades at the base station help reduce hair wrap and manual brush maintenance.",
+      },
+    },
     closingCopy: [
       {
         en: "What you don't see still deserves to be cared for.",
@@ -246,6 +274,7 @@ export const campaignData = {
         chineseDescription:
           "SweepExtend 與 ScrubExtend。當機器人偵測到邊角、桌腳等難以觸及的位置，側刷與拖布會自動延伸，覆蓋邊緣與角落。",
         visualAlt: "Top-down view of robot extending side brush toward a corner",
+        hudLabels: ["Corner detected", "SweepExtend", "ScrubExtend"],
       },
       {
         id: "feature-suction",
@@ -260,6 +289,7 @@ export const campaignData = {
         legalNote:
           "Performance claims and specifications may vary by market. Confirm local approved claims before publishing.",
         visualAlt: "Macro view of carpet fibres with dust being extracted",
+        hudLabels: ["Floor crevice", "Deep in carpet fibres"],
       },
       {
         id: "feature-vision",
@@ -272,6 +302,12 @@ export const campaignData = {
         chineseDescription:
           "IntelliView AI 2.0 雙重視覺系統，結合紅外線與 FHD 視覺，實現障礙物迴避、路徑規劃與清潔智能。可識別液體潑灑，適當時優先拖拭。",
         visualAlt: "Elegant sensing view showing obstacle recognition and path planning",
+        hudLabels: [
+          "Chair leg",
+          "Cable",
+          "Liquid spill detected",
+          "Roller lifted · Mopping priority",
+        ],
       },
       {
         id: "feature-real-life",
@@ -286,6 +322,7 @@ export const campaignData = {
         legalNote:
           "Certain app-controlled and OTA-enabled features may vary by market and availability.",
         visualAlt: "Pet passing through room with robot detecting and cleaning pet hair",
+        hudLabels: ["Carpet detected · Deep clean", "Pet zone · Focused pass"],
       },
       {
         id: "feature-self-clean",

@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight: #0a0e1a;
+  --color-navy-deep: #121a2e;
+  --color-charcoal: #1a1a1f;
+  --color-warm-white: #f5f0eb;
+  --color-amber-gold: #d4a853;
+  --color-stone-warm: #e8dfd3;
+  --color-stone-light: #f0e8dc;
+
+  --font-sans: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-midnight text-warm-white font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-amber-gold/30 text-warm-white;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+
+  .animate-extend-brush {
+    animation: extend-brush 2s ease-in-out infinite;
+  }
+
+  .animate-slide-to-dock {
+    animation: slide-to-dock 3s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-12px); opacity: 0.8; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes extend-brush {
+  0%, 100% { width: 2rem; }
+  50% { width: 3.5rem; }
+}
+
+@keyframes slide-to-dock {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-midnight);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-amber-gold);
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+/* Mobile bottom bar spacing */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 4rem;
+  }
+}

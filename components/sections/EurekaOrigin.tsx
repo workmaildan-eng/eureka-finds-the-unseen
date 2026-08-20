@@ -114,10 +114,13 @@ function OriginContent({ locale }: { locale: "en" | "zh-Hant" }) {
 
   return (
     <>
-      <h2 className="text-5xl md:text-8xl font-bold text-charcoal tracking-tight">
+      <p className="text-[0.68rem] md:text-xs font-medium uppercase tracking-[0.32em] text-charcoal/50 mb-5 md:mb-6">
+        The Origin · Ancient Greece
+      </p>
+      <h2 className="font-display text-6xl md:text-8xl lg:text-9xl font-semibold text-charcoal tracking-[-0.02em]">
         {eurekaOrigin.title}
       </h2>
-      <p className="mt-6 text-lg md:text-2xl text-charcoal/80 max-w-2xl font-medium">
+      <p className="mt-6 text-xl md:text-3xl text-charcoal/80 max-w-2xl font-display italic">
         {t(eurekaOrigin.headline, locale)}
       </p>
       <div className="mt-8 space-y-3 max-w-xl">

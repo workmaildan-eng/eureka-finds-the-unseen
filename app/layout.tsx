@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_TC } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { LocaleProvider } from "@/hooks/useLocale";
 import { Navigation } from "@/components/layout/Navigation";
@@ -13,17 +13,20 @@ const inter = Inter({
   display: "swap",
 });
 
-const notoSansTC = Noto_Sans_TC({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-noto-sans-tc",
+  variable: "--font-fraunces",
   display: "swap",
+  axes: ["opsz"],
 });
 
 export const metadata: Metadata = {
-  title: campaignData.campaign.title,
+  title: {
+    default: campaignData.campaign.title,
+    template: `%s — ${campaignData.campaign.title}`,
+  },
   description:
-    "A cinematic discovery journey — find the unseen in your home and in the care you share.",
+    "A cinematic discovery journey — find the unseen in your home and in the care you share. #EurekaFindsTheUnseen",
   openGraph: {
     title: campaignData.campaign.title,
     description: "Look closer. The unseen is already here.",
@@ -37,9 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-Hant" className={`${inter.variable} ${notoSansTC.variable}`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans">
-        <LocaleProvider defaultLocale={campaignData.campaign.locale}>
+        <LocaleProvider defaultLocale="en">
           <LoadingScreen />
           <Navigation />
           <main>{children}</main>

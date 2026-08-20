@@ -138,18 +138,34 @@ export function HeroRobot() {
           ref={headlineRef}
           className="absolute inset-x-0 top-24 md:top-32 z-20 px-4 text-center"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-warm-white tracking-tight leading-[1.05]">
+          <p className="eyebrow mb-5 md:mb-6">
+            A Discovery Journey · World Cleanup Day 09.20
+          </p>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold text-warm-white tracking-[-0.02em] leading-[1.02] display-glow">
             {t(campaignData.hero.headline, locale)}
           </h1>
-          <p className="mt-4 md:mt-6 text-base md:text-xl text-warm-white/70 max-w-xl mx-auto">
+          <p className="mt-5 md:mt-7 text-base md:text-xl text-warm-white/65 max-w-xl mx-auto font-light leading-relaxed">
             {t(campaignData.hero.supporting, locale)}
           </p>
-          <div className="mt-8">
+          <div className="mt-8 md:mt-10">
             <Button onClick={scrollToOrigin} variant="outline">
               {t(campaignData.hero.cta, locale)}
             </Button>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        {!reducedMotion && (
+          <div
+            className="absolute bottom-8 inset-x-0 z-20 flex flex-col items-center gap-3 text-warm-white/40"
+            aria-hidden="true"
+          >
+            <span className="text-[0.6rem] uppercase tracking-[0.3em]">
+              Scroll to discover
+            </span>
+            <span className="h-8 w-px bg-gradient-to-b from-warm-white/50 to-transparent" />
+          </div>
+        )}
 
         {/* Reduced motion fallback: static keyframe states */}
         {reducedMotion && (

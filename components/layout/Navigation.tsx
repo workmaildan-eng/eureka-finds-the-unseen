@@ -7,7 +7,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { Button } from "@/components/ui/Button";
 
 export function Navigation() {
-  const { locale, toggleLocale } = useLocale();
+  const { locale } = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -57,7 +57,7 @@ export function Navigation() {
         >
           <a
             href="#hero"
-            className={`text-lg font-bold tracking-wider transition-colors ${
+            className={`text-sm font-semibold tracking-[0.4em] transition-colors ${
               scrolled && !isDarkSection ? "text-charcoal" : "text-warm-white"
             }`}
             aria-label="Eureka home"
@@ -65,12 +65,12 @@ export function Navigation() {
             EUREKA
           </a>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm tracking-wide transition-colors hover:text-amber-gold ${
+                className={`text-[0.7rem] uppercase tracking-[0.18em] transition-colors hover:text-amber-gold ${
                   scrolled && !isDarkSection
                     ? "text-charcoal/80"
                     : "text-warm-white/80"
@@ -80,22 +80,10 @@ export function Navigation() {
               </a>
             ))}
 
-            <button
-              onClick={toggleLocale}
-              className={`text-xs tracking-widest px-3 py-1 rounded-full border transition-colors ${
-                scrolled && !isDarkSection
-                  ? "border-charcoal/20 text-charcoal/60 hover:border-charcoal/40"
-                  : "border-warm-white/20 text-warm-white/60 hover:border-warm-white/40"
-              }`}
-              aria-label="Toggle language"
-            >
-              {locale === "en" ? "EN / 繁中" : "繁中 / EN"}
-            </button>
-
             <Button
               href={campaignData.campaign.shopUrl}
               variant="primary"
-              className="!px-5 !py-2 !text-xs"
+              className="!px-5 !py-2 !text-[0.65rem]"
             >
               {t(campaignData.navigation.shopLabel, locale)}
             </Button>
@@ -117,18 +105,12 @@ export function Navigation() {
               <a
                 key={link.href}
                 href={link.href}
-                className="block text-warm-white/80 text-sm py-2"
+                className="block text-warm-white/80 text-sm uppercase tracking-[0.14em] py-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <button
-              onClick={toggleLocale}
-              className="block text-warm-white/60 text-xs tracking-widest py-2"
-            >
-              {locale === "en" ? "EN / 繁中" : "繁中 / EN"}
-            </button>
             <Button href={campaignData.campaign.shopUrl} variant="primary" className="w-full">
               {t(campaignData.navigation.shopLabel, locale)}
             </Button>
@@ -141,14 +123,14 @@ export function Navigation() {
         <Button
           href={`#${campaignData.sections[7].id}`}
           variant="secondary"
-          className="flex-1 !py-2.5 !text-xs"
+          className="flex-1 !py-2.5 !text-[0.65rem]"
         >
           {t(campaignData.navigation.joinLabel, locale)}
         </Button>
         <Button
           href={campaignData.campaign.shopUrl}
           variant="primary"
-          className="flex-1 !py-2.5 !text-xs"
+          className="flex-1 !py-2.5 !text-[0.65rem]"
         >
           {t(campaignData.navigation.shopLabel, locale)}
         </Button>

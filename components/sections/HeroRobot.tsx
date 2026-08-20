@@ -7,7 +7,7 @@ import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Button } from "@/components/ui/Button";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { RobotSVG, SunlitRoom, DustCluster } from "@/components/ui/scenes";
 
 registerGSAP();
 
@@ -39,14 +39,14 @@ export function HeroRobot() {
       });
 
       tl.to(headlineRef.current, { opacity: 0, y: -30, duration: 0.3 }, 0)
-        .to(envRef.current, { opacity: 0.2, duration: 0.5 }, 0.1)
+        .to(envRef.current, { opacity: 0.15, duration: 0.5 }, 0.1)
         .to(sensorRef.current, { opacity: 1, scale: 1, duration: 0.2 }, 0.15)
         .to(
           robotRef.current,
           { scale: 3.5, y: "-15%", duration: 0.6, ease: "power2.in" },
           0.2
         )
-        .to(particlesRef.current, { opacity: 0.6, duration: 0.3 }, 0.3)
+        .to(particlesRef.current, { opacity: 0.9, duration: 0.3 }, 0.3)
         .to(rippleRef.current, { scale: 30, opacity: 1, duration: 0.4 }, 0.65)
         .to(sensorRef.current, { opacity: 0, duration: 0.2 }, 0.7);
     },
@@ -65,53 +65,28 @@ export function HeroRobot() {
       aria-label="Opening scene"
     >
       <div ref={pinRef} className="relative h-screen w-full overflow-hidden">
-        {/* Home environment */}
+        {/* Home environment — pure CSS scene */}
         <div ref={envRef} className="absolute inset-0">
-          <PlaceholderImage
-            src={campaignData.assets.heroPoster}
-            alt="Premium modern home interior with morning light"
-            fill
-            priority
-            className="object-cover"
-            label="Hero Home Interior"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-midnight/20 via-transparent to-midnight/60" />
+          <SunlitRoom mood="day" />
+          <div className="absolute inset-0 bg-gradient-to-b from-midnight/25 via-transparent to-midnight/50" />
         </div>
 
-        {/* Sunlight particles */}
+        {/* Floating dust in the sunlight */}
         <div
           ref={particlesRef}
-          className="absolute inset-0 opacity-30 pointer-events-none"
+          className="absolute inset-0 opacity-40 pointer-events-none"
           aria-hidden="true"
         >
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-amber-gold/40 animate-float"
-              style={{
-                left: `${40 + Math.random() * 20}%`,
-                top: `${10 + Math.random() * 40}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${4 + Math.random() * 3}s`,
-              }}
-            />
-          ))}
-          <div className="absolute top-0 right-1/4 w-1/3 h-full bg-gradient-to-b from-amber-gold/5 to-transparent rotate-12 blur-sm" />
+          <DustCluster seed={7} count={22} className="absolute inset-x-[35%] top-[8%] h-[45%]" />
         </div>
 
-        {/* Robot */}
+        {/* Robot — pure SVG */}
         <div
           ref={robotRef}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 will-change-transform"
+          className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-10 will-change-transform"
         >
-          <div className="relative w-48 h-48 md:w-64 md:h-64">
-            <PlaceholderImage
-              src={campaignData.assets.heroRobot}
-              alt="Eureka J15 Max Ultra robot vacuum"
-              fill
-              className="object-contain drop-shadow-2xl"
-              label="J15 Max Ultra"
-            />
+          <div className="relative w-44 h-44 md:w-60 md:h-60">
+            <RobotSVG className="w-full h-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]" />
             {/* Sensor light ring */}
             <div
               ref={sensorRef}
@@ -136,7 +111,7 @@ export function HeroRobot() {
         {/* Headline */}
         <div
           ref={headlineRef}
-          className="absolute inset-x-0 top-24 md:top-32 z-20 px-4 text-center"
+          className="absolute inset-x-0 top-24 md:top-28 z-20 px-4 text-center"
         >
           <p className="eyebrow mb-5 md:mb-6">
             A Discovery Journey · World Cleanup Day 09.20
@@ -144,7 +119,7 @@ export function HeroRobot() {
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold text-warm-white tracking-[-0.02em] leading-[1.02] display-glow">
             {t(campaignData.hero.headline, locale)}
           </h1>
-          <p className="mt-5 md:mt-7 text-base md:text-xl text-warm-white/65 max-w-xl mx-auto font-light leading-relaxed">
+          <p className="mt-5 md:mt-7 text-base md:text-xl text-warm-white/70 max-w-xl mx-auto font-light leading-relaxed">
             {t(campaignData.hero.supporting, locale)}
           </p>
           <div className="mt-8 md:mt-10">
@@ -167,7 +142,7 @@ export function HeroRobot() {
           </div>
         )}
 
-        {/* Reduced motion fallback: static keyframe states */}
+        {/* Reduced motion fallback */}
         {reducedMotion && (
           <div className="absolute bottom-8 inset-x-0 text-center z-20">
             <Button onClick={scrollToOrigin} variant="outline">

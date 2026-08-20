@@ -54,23 +54,43 @@ export function EurekaOrigin() {
       aria-label="The origin of Eureka"
     >
       <div ref={pinRef} className="relative h-screen w-full overflow-hidden">
-        {/* Greek environment */}
+        {/* Greek environment — pure CSS/SVG scene */}
         <div className="absolute inset-0 bg-gradient-to-b from-stone-warm via-stone-light to-navy-deep/30">
-          {/* Marble columns silhouette */}
+          {/* Sun disc */}
+          <div
+            className="absolute top-[12%] right-[16%] w-24 h-24 md:w-32 md:h-32 rounded-full bg-amber-gold/30 blur-xl"
+            aria-hidden="true"
+          />
+
+          {/* Fluted marble columns */}
           <div
             ref={marbleRef}
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0 opacity-25"
             aria-hidden="true"
           >
-            <div className="absolute left-[10%] bottom-0 w-8 h-[60%] bg-gradient-to-t from-stone-light/40 to-transparent rounded-t-sm" />
-            <div className="absolute left-[20%] bottom-0 w-6 h-[50%] bg-gradient-to-t from-stone-light/30 to-transparent rounded-t-sm" />
-            <div className="absolute right-[15%] bottom-0 w-10 h-[65%] bg-gradient-to-t from-stone-light/40 to-transparent rounded-t-sm" />
-            <div className="absolute right-[25%] bottom-0 w-7 h-[55%] bg-gradient-to-t from-stone-light/30 to-transparent rounded-t-sm" />
+            {[
+              { left: "9%", width: "2.2rem", height: "62%" },
+              { left: "19%", width: "1.6rem", height: "52%" },
+              { right: "14%", width: "2.6rem", height: "67%" },
+              { right: "25%", width: "1.8rem", height: "56%" },
+            ].map((col, i) => (
+              <div
+                key={i}
+                className="absolute bottom-0 rounded-t-sm bg-gradient-to-t from-stone-light/60 to-transparent"
+                style={{
+                  left: col.left,
+                  right: col.right,
+                  width: col.width,
+                  height: col.height,
+                  backgroundImage:
+                    "repeating-linear-gradient(90deg, rgba(23,23,28,0.10) 0 2px, transparent 2px 6px)",
+                }}
+              />
+            ))}
           </div>
 
           {/* Water basin */}
           <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 w-[60%] max-w-lg h-32 rounded-[50%] bg-gradient-to-b from-amber-gold/10 to-navy-deep/20 border border-amber-gold/10">
-            {/* Ripples */}
             <div ref={ripple1Ref} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-amber-gold/30" />
             <div ref={ripple2Ref} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-amber-gold/20" />
             <div ref={ripple3Ref} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-amber-gold/15" />
@@ -85,7 +105,7 @@ export function EurekaOrigin() {
             <div className="w-full h-full bg-gradient-to-t from-charcoal/40 to-transparent rounded-t-full" />
           </div>
 
-          {/* Warm sunlight */}
+          {/* Warm sunlight wash */}
           <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-amber-gold/15 to-transparent" />
         </div>
 

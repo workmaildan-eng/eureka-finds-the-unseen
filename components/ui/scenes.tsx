@@ -257,29 +257,29 @@ export function StoryArt({
       {variant === "home" && (
         <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full">
           {/* Sofa line */}
-          <rect x="30" y="62" width="140" height="26" rx="10" fill="#b39b74" />
-          <rect x="24" y="76" width="12" height="18" rx="5" fill="#b39b74" />
-          <rect x="164" y="76" width="12" height="18" rx="5" fill="#b39b74" />
+          <rect x="30" y="62" width="140" height="26" rx="10" fill="#9a7d52" />
+          <rect x="24" y="76" width="12" height="18" rx="5" fill="#9a7d52" />
+          <rect x="164" y="76" width="12" height="18" rx="5" fill="#9a7d52" />
           {/* Sweeping arc */}
           <path
             d="M 40 100 Q 100 60 165 96"
             fill="none"
-            stroke="#d8ab55"
-            strokeWidth="2.5"
+            stroke="#b8862e"
+            strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray="1 7"
           />
-          <circle cx="165" cy="96" r="4" fill="#d8ab55" />
+          <circle cx="165" cy="96" r="4.5" fill="#b8862e" />
         </svg>
       )}
 
       {variant === "hand" && (
         <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full">
           {/* Two figures, one helping the other */}
-          <circle cx="78" cy="48" r="13" fill="#8f7a56" />
-          <path d="M 60 100 Q 78 62 96 100 Z" fill="#8f7a56" />
-          <circle cx="126" cy="42" r="13" fill="#b39b74" />
-          <path d="M 108 100 Q 126 56 144 100 Z" fill="#b39b74" />
+          <circle cx="78" cy="48" r="13" fill="#75603e" />
+          <path d="M 60 100 Q 78 62 96 100 Z" fill="#75603e" />
+          <circle cx="126" cy="42" r="13" fill="#9a7d52" />
+          <path d="M 108 100 Q 126 56 144 100 Z" fill="#9a7d52" />
           {/* Helping arc between them */}
           <path
             d="M 92 66 Q 102 56 112 62"
@@ -299,8 +299,8 @@ export function StoryArt({
           <circle cx="100" cy="62" r="16" fill="none" stroke="#d8ab55" strokeOpacity="0.55" strokeWidth="1.5" />
           <circle cx="100" cy="62" r="28" fill="none" stroke="#d8ab55" strokeOpacity="0.35" strokeWidth="1.5" />
           <circle cx="100" cy="62" r="42" fill="none" stroke="#d8ab55" strokeOpacity="0.18" strokeWidth="1.5" />
-          <circle cx="152" cy="34" r="3" fill="#b39b74" />
-          <circle cx="52" cy="88" r="3" fill="#b39b74" />
+          <circle cx="152" cy="34" r="3" fill="#9a7d52" />
+          <circle cx="52" cy="88" r="3" fill="#9a7d52" />
         </svg>
       )}
     </div>

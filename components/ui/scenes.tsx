@@ -55,7 +55,7 @@ export function RobotSVG({
           cy="100"
           r="97"
           fill="none"
-          stroke="rgba(216,171,85,0.28)"
+          stroke="rgba(122,46,192,0.28)"
           strokeWidth="1.5"
         />
       )}
@@ -79,11 +79,11 @@ export function RobotSVG({
         cy="78"
         r="22"
         fill="#101420"
-        stroke="rgba(216,171,85,0.45)"
+        stroke="rgba(122,46,192,0.45)"
         strokeWidth="1.5"
       />
       <circle cx="100" cy="78" r="8" fill="#1c2233" />
-      <circle cx="100" cy="78" r="3" fill="#d8ab55" opacity="0.9" />
+      <circle cx="100" cy="78" r="3" fill="#7A2EC0" opacity="0.9" />
 
       {/* Brand mark */}
       <text
@@ -102,7 +102,7 @@ export function RobotSVG({
       <path
         d="M 62 158 A 86 86 0 0 0 138 158"
         fill="none"
-        stroke="rgba(216,171,85,0.5)"
+        stroke="rgba(122,46,192,0.5)"
         strokeWidth="3"
         strokeLinecap="round"
       />
@@ -129,13 +129,13 @@ export function SunlitRoom({ mood = "day" }: { mood?: "day" | "dusk" }) {
       <div
         className={`absolute top-0 right-[12%] w-[26%] h-[54%] blur-md ${
           dusk
-            ? "bg-gradient-to-b from-amber-gold/25 to-transparent"
+            ? "bg-gradient-to-b from-eureka-purple/25 to-transparent"
             : "bg-gradient-to-b from-[#fff8e8] to-transparent"
         }`}
       />
 
       {/* Light beams */}
-      <div className="absolute top-0 right-[8%] w-[40%] h-full origin-top rotate-[18deg] bg-gradient-to-b from-amber-gold/[0.12] to-transparent blur-sm" />
+      <div className="absolute top-0 right-[8%] w-[40%] h-full origin-top rotate-[18deg] bg-gradient-to-b from-eureka-purple/[0.12] to-transparent blur-sm" />
       <div className="absolute top-0 right-[26%] w-[22%] h-full origin-top rotate-[24deg] bg-gradient-to-b from-warm-white/10 to-transparent blur-md" />
 
       {/* Floor */}
@@ -222,7 +222,7 @@ export function DustCluster({
         <div
           key={i}
           className={`absolute rounded-full animate-float ${
-            glow ? "bg-amber-gold/70 shadow-[0_0_8px_rgba(216,171,85,0.8)]" : "bg-amber-gold/40"
+            glow ? "bg-eureka-purple/70 shadow-[0_0_8px_rgba(122,46,192,0.8)]" : "bg-eureka-purple/40"
           }`}
           style={{
             left: `${d.left}%`,
@@ -252,7 +252,7 @@ export function StoryArt({
       aria-hidden="true"
     >
       {/* Soft sun */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-amber-gold/20 blur-2xl" />
+      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-eureka-purple/20 blur-2xl" />
 
       {variant === "home" && (
         <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full">
@@ -264,12 +264,12 @@ export function StoryArt({
           <path
             d="M 40 100 Q 100 60 165 96"
             fill="none"
-            stroke="#d8ab55"
+            stroke="#7A2EC0"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeDasharray="1 7"
           />
-          <circle cx="165" cy="96" r="4" fill="#d8ab55" />
+          <circle cx="165" cy="96" r="4" fill="#7A2EC0" />
         </svg>
       )}
 
@@ -284,21 +284,21 @@ export function StoryArt({
           <path
             d="M 92 66 Q 102 56 112 62"
             fill="none"
-            stroke="#d8ab55"
+            stroke="#7A2EC0"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
-          <circle cx="102" cy="58" r="3.5" fill="#d8ab55" />
+          <circle cx="102" cy="58" r="3.5" fill="#7A2EC0" />
         </svg>
       )}
 
       {variant === "share" && (
         <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full">
           {/* Radiating rings of shared care */}
-          <circle cx="100" cy="62" r="5" fill="#d8ab55" />
-          <circle cx="100" cy="62" r="16" fill="none" stroke="#d8ab55" strokeOpacity="0.55" strokeWidth="1.5" />
-          <circle cx="100" cy="62" r="28" fill="none" stroke="#d8ab55" strokeOpacity="0.35" strokeWidth="1.5" />
-          <circle cx="100" cy="62" r="42" fill="none" stroke="#d8ab55" strokeOpacity="0.18" strokeWidth="1.5" />
+          <circle cx="100" cy="62" r="5" fill="#7A2EC0" />
+          <circle cx="100" cy="62" r="16" fill="none" stroke="#7A2EC0" strokeOpacity="0.55" strokeWidth="1.5" />
+          <circle cx="100" cy="62" r="28" fill="none" stroke="#7A2EC0" strokeOpacity="0.35" strokeWidth="1.5" />
+          <circle cx="100" cy="62" r="42" fill="none" stroke="#7A2EC0" strokeOpacity="0.18" strokeWidth="1.5" />
           <circle cx="152" cy="34" r="3" fill="#b39b74" />
           <circle cx="52" cy="88" r="3" fill="#b39b74" />
         </svg>
@@ -339,12 +339,12 @@ export function GradientThumb({
     >
       {/* Concentric arcs */}
       <svg viewBox="0 0 200 120" className="absolute inset-0 w-full h-full opacity-40">
-        <circle cx="160" cy="100" r="30" fill="none" stroke={dark ? "rgba(216,171,85,0.35)" : "rgba(143,120,80,0.4)"} strokeWidth="1" />
-        <circle cx="160" cy="100" r="48" fill="none" stroke={dark ? "rgba(216,171,85,0.2)" : "rgba(143,120,80,0.25)"} strokeWidth="1" />
-        <circle cx="160" cy="100" r="68" fill="none" stroke={dark ? "rgba(216,171,85,0.12)" : "rgba(143,120,80,0.15)"} strokeWidth="1" />
+        <circle cx="160" cy="100" r="30" fill="none" stroke={dark ? "rgba(122,46,192,0.35)" : "rgba(122,46,192,0.4)"} strokeWidth="1" />
+        <circle cx="160" cy="100" r="48" fill="none" stroke={dark ? "rgba(122,46,192,0.2)" : "rgba(122,46,192,0.25)"} strokeWidth="1" />
+        <circle cx="160" cy="100" r="68" fill="none" stroke={dark ? "rgba(122,46,192,0.12)" : "rgba(122,46,192,0.15)"} strokeWidth="1" />
       </svg>
       <span
-        className={`absolute bottom-3 left-4 font-display text-lg md:text-xl italic ${
+        className={`absolute bottom-3 left-4 font-sans text-lg md:text-xl italic ${
           dark ? "text-warm-white/50" : "text-[#6b5a3e]/70"
         }`}
       >
@@ -372,7 +372,7 @@ export function AvatarMark({
 
   return (
     <div
-      className={`flex items-center justify-center rounded-full bg-gradient-to-br from-amber-gold/80 via-[#c9a05c] to-navy-deep text-midnight font-display font-semibold ${className}`}
+      className={`flex items-center justify-center rounded-full bg-gradient-to-br from-eureka-purple/80 via-[#9B4ED4] to-navy-deep text-warm-white font-sans font-semibold ${className}`}
       aria-hidden="true"
     >
       {initials}

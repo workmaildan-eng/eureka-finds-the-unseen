@@ -35,7 +35,7 @@ export function PlaceholderImage({
         style={!fill ? { width, height } : undefined}
       >
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-amber-gold/10 blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-eureka-purple/10 blur-3xl" />
           <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full bg-warm-white/5 blur-3xl" />
         </div>
         <span className="relative z-10 text-xs uppercase tracking-[0.2em] text-warm-white/40 px-4 text-center">

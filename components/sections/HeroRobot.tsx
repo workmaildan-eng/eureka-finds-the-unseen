@@ -7,153 +7,193 @@ import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Button } from "@/components/ui/Button";
-import { RobotSVG, SunlitRoom, DustCluster } from "@/components/ui/scenes";
+import { HeroKv } from "@/components/sections/HeroKv";
+import { revealMobile } from "@/lib/mobileReveal";
 
 registerGSAP();
 
 export function HeroRobot() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
-  const robotRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
-  const envRef = useRef<HTMLDivElement>(null);
-  const sensorRef = useRef<HTMLDivElement>(null);
-  const rippleRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const kvRef = useRef<HTMLDivElement>(null);
+  const leftRef = useRef<HTMLElement>(null);
+  const rightRef = useRef<HTMLElement>(null);
+  const originInnerRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
   const reducedMotion = useReducedMotion();
 
   useGSAP(
     () => {
-      if (reducedMotion || !sectionRef.current) return;
+      if (!sectionRef.current) return;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=200%",
-          pin: pinRef.current,
-          scrub: 1,
-          anticipatePin: 1,
-        },
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 768px)", () => {
+        if (reducedMotion) return;
+        const cards = gsap.utils.toArray<HTMLElement>(".unseen-card", rightRef.current);
+        const sideWidth = () => window.innerWidth * 0.28;
+
+        gsap.set(originInnerRef.current, { opacity: 0, y: 56, x: 0, xPercent: 0 });
+        cards.forEach((card) => {
+          gsap.set(card, { opacity: 0, xPercent: 110 });
+        });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=165%",
+            pin: pinRef.current,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Narrow the middle column. 75% of this motion finishes before sides start.
+        tl.to(copyRef.current, { opacity: 0, duration: 0.3 }, 0).to(
+          kvRef.current,
+          { width: "44%", height: "70%", duration: 1 },
+          0
+        );
+
+        // Open side column slots first so the enter motions are visible.
+        tl.to(
+          [leftRef.current, rightRef.current],
+          { width: sideWidth, duration: 0.2 },
+          0.75
+        );
+
+        // Left: fade up only, after the column slot is fully open.
+        tl.to(
+          originInnerRef.current,
+          { opacity: 1, y: 0, duration: 0.55 },
+          0.95
+        );
+
+        // Right: stair stack from the right, starting at top 30%.
+        cards.forEach((card, i) => {
+          tl.to(
+            card,
+            { opacity: 1, xPercent: 0, duration: 0.45 },
+            0.82 + i * 0.12
+          );
+        });
+
+        return () => {
+          gsap.set(
+            [kvRef.current, leftRef.current, rightRef.current, originInnerRef.current, stageRef.current],
+            { clearProps: "all" }
+          );
+          gsap.set(cards, { clearProps: "all" });
+        };
       });
 
-      tl.to(headlineRef.current, { opacity: 0, y: -30, duration: 0.3 }, 0)
-        .to(envRef.current, { opacity: 0.15, duration: 0.5 }, 0.1)
-        .to(sensorRef.current, { opacity: 1, scale: 1, duration: 0.2 }, 0.15)
-        .to(
-          robotRef.current,
-          { scale: 3.5, y: "-15%", duration: 0.6, ease: "power2.in" },
-          0.2
-        )
-        .to(particlesRef.current, { opacity: 0.9, duration: 0.3 }, 0.3)
-        .to(rippleRef.current, { scale: 30, opacity: 1, duration: 0.4 }, 0.65)
-        .to(sensorRef.current, { opacity: 0, duration: 0.2 }, 0.7);
+      mm.add("(max-width: 767px)", () => {
+        if (reducedMotion) return;
+        revealMobile(kvRef.current, { y: 0, start: "top 99%", duration: 0.8, stagger: 0 });
+        revealMobile(copyRef.current, { delay: 0.18, y: 16, start: "top 99%", stagger: 0 });
+        revealMobile(originInnerRef.current, { start: "top 86%", stagger: 0 });
+        revealMobile(".unseen-card", { stagger: 0.1, y: 22, start: "top 88%" });
+      });
+
+      return () => mm.revert();
     },
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
 
-  const scrollToOrigin = () => {
-    document.getElementById("origin")?.scrollIntoView({ behavior: "smooth" });
+  const openCampaign = () => {
+    document.getElementById("campaign")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const cards = campaignData.unseenHome.cards;
 
   return (
     <section
       id="hero"
       ref={sectionRef}
-      className="relative bg-midnight"
+      className="relative z-20 bg-[#f8f6f2]"
       aria-label="Opening scene"
     >
-      <div ref={pinRef} className="relative h-screen w-full overflow-hidden">
-        {/* Home environment — pure CSS scene */}
-        <div ref={envRef} className="absolute inset-0">
-          <SunlitRoom mood="day" />
-          <div className="absolute inset-0 bg-gradient-to-b from-midnight/25 via-transparent to-midnight/50" />
-        </div>
+      <div ref={pinRef} className={`hero-story-pin ${reducedMotion ? "is-static" : ""}`}>
+        <div ref={stageRef} className="hero-story-stage">
+          <div className="hero-story-grid">
+            <aside id="origin" ref={leftRef} className="hero-story-side">
+              <div ref={originInnerRef} className="hero-story-side-inner origin-col">
+                <p className="eyebrow mb-4">The Origin</p>
+                <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl font-semibold text-charcoal tracking-[-0.03em]">
+                  {campaignData.eurekaOrigin.title}
+                </h2>
+                <p className="mt-4 font-sans text-base md:text-lg text-charcoal/80 leading-snug">
+                  {t(campaignData.eurekaOrigin.headline, locale)}
+                </p>
+                <div className="mt-5 space-y-3">
+                  {campaignData.eurekaOrigin.body.map((line, i) => (
+                    <p key={i} className="text-sm text-charcoal/55 leading-relaxed">
+                      {locale === "zh-Hant" ? line.zh : line.en}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </aside>
 
-        {/* Floating dust in the sunlight */}
-        <div
-          ref={particlesRef}
-          className="absolute inset-0 opacity-40 pointer-events-none"
-          aria-hidden="true"
-        >
-          <DustCluster seed={7} count={22} className="absolute inset-x-[35%] top-[8%] h-[45%]" />
-        </div>
+            <div ref={kvRef} className="hero-story-kv">
+              <HeroKv />
 
-        {/* Robot — pure SVG */}
-        <div
-          ref={robotRef}
-          className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 z-10 will-change-transform"
-        >
-          <div className="relative w-44 h-44 md:w-60 md:h-60">
-            <RobotSVG className="w-full h-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]" />
-            {/* Sensor light ring */}
-            <div
-              ref={sensorRef}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-2 border-amber-gold/60 opacity-0 scale-50"
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 rounded-full bg-amber-gold/10 animate-pulse-slow" />
-              <div className="absolute inset-2 rounded-full border border-amber-gold/30" />
+              <div
+                ref={copyRef}
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-30 px-4 pb-16 md:pb-14 pt-10 text-center"
+              >
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-midnight/80 via-midnight/35 to-transparent -z-10"
+                  aria-hidden="true"
+                />
+                <h1 className="font-sans text-4xl md:text-6xl lg:text-7xl font-semibold text-warm-white tracking-[-0.02em] leading-[1.05] display-glow">
+                  {t(campaignData.hero.headline, locale)}
+                </h1>
+                <p className="mt-4 md:mt-5 text-base md:text-lg text-warm-white/75 max-w-xl mx-auto font-light leading-relaxed">
+                  {t(campaignData.hero.supporting, locale)}
+                </p>
+                <div className="mt-7 pointer-events-auto cursor-auto">
+                  <Button onClick={openCampaign} variant="primary">
+                    {t(campaignData.hero.cta, locale)}
+                  </Button>
+                </div>
+                {!reducedMotion && (
+                  <div
+                    className="mt-8 flex flex-col items-center gap-3 text-warm-white/40"
+                    aria-hidden="true"
+                  >
+                    <span className="text-[0.6rem] uppercase tracking-[0.3em]">
+                      {t(campaignData.hero.scrollCue, locale)}
+                    </span>
+                    <span className="h-8 w-px bg-gradient-to-b from-warm-white/50 to-transparent" />
+                  </div>
+                )}
+              </div>
             </div>
+
+            <aside id="unseen" ref={rightRef} className="hero-story-side">
+              <div className="hero-story-side-inner">
+                <div className="unseen-col">
+                  {cards.map((card) => (
+                    <article key={card.id} className="unseen-card">
+                      <img src={card.image} alt={card.imageAlt} draggable={false} />
+                      <div className="unseen-card-copy">
+                        <p>{locale === "zh-Hant" ? card.title.zh : card.title.en}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
-
-        {/* Water ripple transition */}
-        <div
-          ref={rippleRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border border-amber-gold/40 opacity-0 scale-0 z-20 pointer-events-none"
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 rounded-full bg-amber-gold/5" />
-        </div>
-
-        {/* Headline */}
-        <div
-          ref={headlineRef}
-          className="absolute inset-x-0 top-24 md:top-28 z-20 px-4 text-center"
-        >
-          <p className="eyebrow mb-5 md:mb-6">
-            A Discovery Journey · World Cleanup Day 09.20
-          </p>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-semibold text-warm-white tracking-[-0.02em] leading-[1.02] display-glow">
-            {t(campaignData.hero.headline, locale)}
-          </h1>
-          <p className="mt-5 md:mt-7 text-base md:text-xl text-warm-white/70 max-w-xl mx-auto font-light leading-relaxed">
-            {t(campaignData.hero.supporting, locale)}
-          </p>
-          <div className="mt-8 md:mt-10">
-            <Button onClick={scrollToOrigin} variant="outline">
-              {t(campaignData.hero.cta, locale)}
-            </Button>
-          </div>
-        </div>
-
-        {/* Scroll cue */}
-        {!reducedMotion && (
-          <div
-            className="absolute bottom-8 inset-x-0 z-20 flex flex-col items-center gap-3 text-warm-white/40"
-            aria-hidden="true"
-          >
-            <span className="text-[0.6rem] uppercase tracking-[0.3em]">
-              Scroll to discover
-            </span>
-            <span className="h-8 w-px bg-gradient-to-b from-warm-white/50 to-transparent" />
-          </div>
-        )}
-
-        {/* Reduced motion fallback */}
-        {reducedMotion && (
-          <div className="absolute bottom-8 inset-x-0 text-center z-20">
-            <Button onClick={scrollToOrigin} variant="outline">
-              {t(campaignData.hero.cta, locale)}
-            </Button>
-          </div>
-        )}
       </div>
-
-      {/* Scroll spacer for pinned animation */}
-      {!reducedMotion && <div className="h-[200vh]" aria-hidden="true" />}
+      {/* Gap after the pinned 100dvh stage — not inside the pin, so KV stays viewport-bottom. */}
+      <div className="hero-story-gap" aria-hidden="true" />
     </section>
   );
 }

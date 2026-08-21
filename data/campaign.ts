@@ -64,15 +64,14 @@ export const campaignData = {
     hashtag: "#EurekaFindsTheUnseen",
     locale: "zh-Hant" as Locale,
     productName: "Eureka J15 Max Ultra",
-    productUrl: "#discover-j15",
+    productUrl: "#campaign",
     shopUrl: "#shop",
     termsUrl: "#terms",
     privacyUrl: "#privacy",
   },
 
   navigation: {
-    discoverLabel: { en: "Discover J15 Max Ultra", zh: "探索 J15 Max Ultra" },
-    joinLabel: { en: "Join the Discovery", zh: "加入發現之旅" },
+    discoverLabel: { en: "J15 Max Ultra Giveaway", zh: "J15 Max Ultra Giveaway" },
     shopLabel: { en: "Shop Now", zh: "立即選購" },
   },
 
@@ -82,7 +81,8 @@ export const campaignData = {
       en: "Look closer. The unseen is already here.",
       zh: "仔細看，未被發現的，就在身邊。",
     },
-    cta: { en: "Begin the discovery", zh: "開始發現" },
+    scrollCue: { en: "Scroll to discover", zh: "下滑發現更多" },
+    cta: { en: "Explore & Win a J15 Max Ultra", zh: "探索並贏走 J15 Max Ultra" },
   },
 
   eurekaOrigin: {
@@ -121,8 +121,8 @@ export const campaignData = {
     hotspots: [
       {
         id: "sofa-gap",
-        label: "Hidden in the gaps.",
-        chineseLabel: "藏在縫隙之中",
+        label: "Hidden in the sofa gap.",
+        chineseLabel: "藏在沙發縫隙之中",
         x: 28,
         y: 62,
       },
@@ -162,52 +162,119 @@ export const campaignData = {
         y: 35,
       },
     ] as Hotspot[],
+    cards: [
+      {
+        id: "sofa-gap",
+        title: { en: "Hidden in the sofa gap.", zh: "藏在沙發縫隙之中" },
+        image: "/images/unseen-sofa-gap.jpg?v=4",
+        imageAlt: "Dust and crumbs hidden in a sofa cushion gap",
+      },
+      {
+        id: "carpet",
+        title: { en: "Trapped beneath the surface.", zh: "藏在表面之下" },
+        image: "/images/unseen-carpet.jpg?v=4",
+        imageAlt: "Dirt trapped in carpet fibres",
+      },
+      {
+        id: "corner",
+        title: { en: "Out of sight. Not out of reach.", zh: "看不見，不代表不存在" },
+        image: "/images/unseen-corner.jpg?v=4",
+        imageAlt: "Dust gathered along a wall edge and floor corner",
+      },
+    ],
   },
 
   careBeginsAtHome: {
     headline: {
-      en: "Cleaning begins at home. Care begins when we notice.",
-      zh: "清潔始於家中，關懷始於發現。",
+      en: "Cleaning begins at home.\nCare begins with seeing what others miss.",
+      zh: "清潔始於家中。\n關懷，始於看見他人忽略之處。",
     },
-    supporting: [
-      {
-        en: "The unseen is not only the dust beneath a sofa.",
-        zh: "被忽略的，不只是沙發底下的灰塵。",
-      },
-      {
-        en: "It can be a corner left untouched, a home that needs a helping hand, or someone around us who could use a little care.",
-        zh: "也可能是一個久未清理的角落、一個需要幫忙的家，或一位值得被關心的人。",
-      },
-    ],
     stories: [
       {
         id: "story-01",
-        title: "Look Closer at Home",
-        chineseTitle: "發現家居被忽略的角落",
-        copy: "A cleaner home begins with a closer look.",
-        chineseCopy: "看得更仔細，才是潔淨生活的開始。",
-        image: "/images/story-home-cleaning.jpg",
-        imageAlt: "Person cleaning under a sofa at home",
+        title: "Looked after, even when living alone.",
+        chineseTitle: "幫獨居長者，打理被忽略的家。",
+        copy: "Eureka finds the dust they can no longer reach, so ageing at home feels lighter.",
+        chineseCopy: "Eureka 找到長輩伸手難及的灰塵，讓獨居的家，住得更輕鬆。",
+        image: "/images/story-elder.jpg",
+        imageAlt: "Adult visiting an elderly parent while a Eureka robot vacuum cares for the home",
       },
       {
         id: "story-02",
-        title: "Lend a Hand",
-        chineseTitle: "幫助有需要的人",
-        copy: "Sometimes, discovering the unseen means noticing who needs help.",
-        chineseCopy: "有時候，發現被忽略的事，就是看見誰需要一點幫忙。",
-        image: "/images/story-lend-hand.jpg",
-        imageAlt: "Family member helping elderly person with home cleaning",
+        title: "Healthier for pets. Safer for family.",
+        chineseTitle: "守護寵物，也守護全家人的健康。",
+        copy: "Hair, dander and hidden dust settle where we don't look. Eureka notices first.",
+        chineseCopy: "毛髮、皮屑與灰塵，藏在看不見的地方。Eureka 先看見。",
+        image: "/images/story-pet-family.jpg",
+        imageAlt: "Family and a spaniel in a bright kitchen with a Eureka robot vacuum nearby",
       },
       {
         id: "story-03",
-        title: "Make Care Contagious",
-        chineseTitle: "把關懷分享出去",
-        copy: "One small act of care can make a visible difference.",
-        chineseCopy: "一個小小的清潔行動，也能帶來看得見的改變。",
-        image: "/images/story-share-care.jpg",
-        imageAlt: "Friends and family cleaning together at home",
+        title: "The first lesson in looking closer.",
+        chineseTitle: "清潔，是孩子學會關懷的第一課。",
+        copy: "When a child watches a home being looked after, noticing becomes a habit of kindness.",
+        chineseCopy: "孩子看見家被好好照顧，也就學會：發現，是關懷的開始。",
+        image: "/images/story-child.jpg",
+        imageAlt: "Parent and child watching a Eureka robot vacuum clean the living-room floor",
       },
     ] as StoryPanel[],
+  },
+
+  giveaway: {
+    titleLines: {
+      en: ["Find it.", "Clean it.", "Win it."],
+      zh: ["Find it.", "Clean it.", "Win it."],
+    },
+    supporting: {
+      en: "Four creators across Europe are opening the giveaway. Show us an unseen dirty corner, tag a friend, and you could have a YouTuber visit to clean — and win the Eureka J15 Max Ultra.",
+      zh: "四位歐洲頭部博主發起 Find it clean it win it。分享身邊需要清潔的角落、標記朋友，就有機會讓博主上門拍攝清潔，並抽中 Eureka J15 Max Ultra。",
+    },
+    productName: "Eureka J15 Max Ultra",
+    tag: "Free Giveaway",
+    productImage: "/images/j15-max-ultra-official.jpg",
+    productAlt: "Eureka J15 Max Ultra robot vacuum and self-cleaning dock",
+    cta: { en: "Follow Us & Join the Giveaway", zh: "追蹤我們並參加 Giveaway" },
+    rulesTitle: { en: "How to participate", zh: "參加方式" },
+    steps: [
+      {
+        en: "Follow Eureka on Instagram and like the post.",
+        zh: "在 Instagram 追蹤 Eureka，並為貼文點讚。",
+      },
+      {
+        en: "Follow the YouTuber, comment on their campaign post, point out unseen dirt around you, and tag a friend.",
+        zh: "追蹤該位 YouTuber，在活動貼文留言指出身邊的 unseen dirt，並標記一位朋友。",
+      },
+      {
+        en: "Selected fans get a creator visit to clean the dirt area, plus a free J15 Max Ultra.",
+        zh: "被選中的粉絲可獲博主上門清潔該處，並獲贈一台 J15 Max Ultra。",
+      },
+    ],
+    youtubers: [
+      {
+        id: "lena",
+        name: "Lena Hart",
+        handle: "@lenahart",
+        image: "/images/youtuber-lena.jpg",
+      },
+      {
+        id: "hugo",
+        name: "Hugo Moreau",
+        handle: "@hugohome",
+        image: "/images/youtuber-hugo.jpg",
+      },
+      {
+        id: "isla",
+        name: "Isla Bennett",
+        handle: "@islabennett",
+        image: "/images/youtuber-isla.jpg",
+      },
+      {
+        id: "matteo",
+        name: "Matteo Ricci",
+        handle: "@matteohome",
+        image: "/images/youtuber-matteo.jpg",
+      },
+    ],
   },
 
   product: {
@@ -517,6 +584,11 @@ export const campaignData = {
   },
 
   assets: {
+    heroHomeClean: "/images/hero-home-clean.jpg?v=3",
+    heroHomeDust: "/images/hero-home-dust.jpg?v=4",
+    unseenSofa: "/images/unseen-sofa-gap.jpg?v=4",
+    unseenCarpet: "/images/unseen-carpet.jpg?v=4",
+    unseenCorner: "/images/unseen-corner.jpg?v=4",
     heroVideo: "/videos/hero-home.mp4",
     heroPoster: "/images/hero-home-poster.jpg",
     heroRobot: "/images/robot-j15-hero.png",
@@ -533,11 +605,8 @@ export const campaignData = {
     { id: "origin", label: { en: "Origin", zh: "起源" } },
     { id: "unseen", label: { en: "Unseen", zh: "隱藏" } },
     { id: "care", label: { en: "Care", zh: "關懷" } },
-    { id: "product", label: { en: "Product", zh: "產品" } },
+    { id: "campaign", label: { en: "Giveaway", zh: "活動" } },
     { id: "creators", label: { en: "Creators", zh: "創作者" } },
-    { id: "timeline", label: { en: "Timeline", zh: "時間線" } },
-    { id: "join", label: { en: "Join", zh: "參與" } },
-    { id: "final", label: { en: "Discover", zh: "發現" } },
   ],
 } as const;
 

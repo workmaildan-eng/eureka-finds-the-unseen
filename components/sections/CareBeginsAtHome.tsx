@@ -31,14 +31,17 @@ export function CareBeginsAtHome() {
         const html = document.documentElement;
 
         const getDistance = () => Math.max(0, track.scrollWidth - film.clientWidth);
+        // Extra pan after the last slide is fully in view — still moving, no freeze.
+        const getOverrun = () => Math.round(film.clientWidth * 0.55);
+        const getTravel = () => getDistance() + getOverrun();
 
         const tween = gsap.to(track, {
-          x: () => -getDistance(),
+          x: () => -getTravel(),
           ease: "none",
           scrollTrigger: {
             trigger: pinRef.current,
             start: "top top",
-            end: () => `+=${getDistance()}`,
+            end: () => `+=${getTravel()}`,
             pin: true,
             scrub: 1,
             anticipatePin: 1,

@@ -120,18 +120,20 @@ export function CampaignCreators() {
           </div>
 
           <div className="campaign-product">
-            <img
-              src={giveaway.productImage}
-              alt={giveaway.productAlt}
-              draggable={false}
-            />
-            <div className="giveaway-tag">
-              <div className="giveaway-tag-spin" aria-hidden="true" />
-              <p className="giveaway-tag-text">
-                {giveaway.tag.split(" ").map((word) => (
-                  <span key={word}>{word}</span>
-                ))}
-              </p>
+            <div className="campaign-product-shot">
+              <img
+                src={giveaway.productImage}
+                alt={giveaway.productAlt}
+                draggable={false}
+              />
+              <div className="giveaway-tag">
+                <div className="giveaway-tag-spin" aria-hidden="true" />
+                <p className="giveaway-tag-text">
+                  {giveaway.tag.split(" ").map((word) => (
+                    <span key={word}>{word}</span>
+                  ))}
+                </p>
+              </div>
             </div>
           </div>
         </div>

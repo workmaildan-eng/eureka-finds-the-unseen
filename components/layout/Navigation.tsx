@@ -47,7 +47,7 @@ export function Navigation() {
       role="banner"
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8"
+        className="flex w-full items-center justify-between gap-3 px-4 py-3 md:px-5 lg:px-6"
         aria-label="Main navigation"
       >
         <a

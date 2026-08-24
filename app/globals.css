@@ -402,7 +402,15 @@
     font-size: clamp(1.75rem, 3.4vw, 3.65rem);
   }
 
+  .care-pin:not(.is-static) {
+    height: 100dvh;
+  }
+
   .care-pin:not(.is-static) .care-film {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    padding-bottom: 1.5rem;
     cursor: grab;
     user-select: none;
   }
@@ -414,6 +422,11 @@
 
   .care-film.is-dragging * {
     pointer-events: none;
+  }
+
+  /* Keep 3:2 (no crop) but cap height so title + caption stay on screen. */
+  .care-pin:not(.is-static) .care-slide {
+    width: min(calc(100vw - 8rem), calc((100dvh - 21rem) * 3 / 2));
   }
 }
 
@@ -433,7 +446,8 @@
 .care-slide-frame {
   position: relative;
   width: 100%;
-  height: min(52vh, 520px);
+  height: auto;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background: #f3f1ee;
 }
@@ -501,11 +515,6 @@
   .care-slide {
     width: 100%;
   }
-
-  .care-slide-frame {
-    height: auto;
-    aspect-ratio: 16 / 10;
-  }
 }
 
 .campaign-section {
@@ -557,32 +566,42 @@
 
 .campaign-product {
   position: relative;
-  flex: 0 0 26%;
+  flex: 0 0 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-width: 0;
-  max-height: 15vh;
+  max-height: none;
+  overflow: visible;
+}
+
+.campaign-product-shot {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: none;
 }
 
 .campaign-product img {
-  width: auto;
-  height: min(15vh, 152px);
-  max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-height: min(52vh, 560px);
   object-fit: contain;
+  object-position: right center;
   display: block;
 }
 
 .giveaway-tag {
   position: absolute;
-  top: 8%;
-  right: 6%;
-  width: 6.4rem;
-  height: 6.4rem;
+  top: 20%;
+  right: 27%;
+  width: 9.6rem;
+  height: 9.6rem;
   display: grid;
   place-items: center;
   pointer-events: none;
   z-index: 2;
+  transform: none;
 }
 
 .giveaway-tag-spin {
@@ -623,7 +642,7 @@
   flex-direction: column;
   align-items: center;
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   line-height: 1.15;
@@ -879,19 +898,35 @@
     max-height: none;
     order: 0;
     overflow: visible;
+    justify-content: center;
   }
 
-  .campaign-product img {
-    height: auto;
-    width: 70%;
+  .campaign-product-shot {
+    width: 92%;
+    max-width: none;
     margin: 0 auto;
+    aspect-ratio: auto;
+  }
+
+  .campaign-product-shot img,
+  .campaign-product img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    object-fit: contain;
   }
 
   .giveaway-tag {
-    width: 5.4rem;
-    height: 5.4rem;
-    right: 4%;
-    top: 0;
+    width: 7.4rem;
+    height: 7.4rem;
+    top: 18%;
+    right: 24%;
+    transform: none;
+  }
+
+  .giveaway-tag-text {
+    font-size: 0.78rem;
   }
 
   .campaign-name {

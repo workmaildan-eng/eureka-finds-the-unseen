@@ -231,7 +231,7 @@ export const campaignData = {
     },
     productName: "Eureka J15 Max Ultra",
     tag: "Free Giveaway",
-    productImage: "/images/j15-max-ultra-official.jpg",
+    productImage: "/images/world-cleaning-day-prize.png",
     productAlt: "Eureka J15 Max Ultra robot vacuum and self-cleaning dock",
     cta: { en: "Follow Us & Join the Giveaway", zh: "追蹤我們並參加 Giveaway" },
     rulesTitle: { en: "How to participate", zh: "參加方式" },

@@ -23,17 +23,17 @@ export function Footer() {
             </p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href={campaign.productUrl} className="hover:text-amber-gold transition-colors">
+                <a href={campaign.productUrl} className="hover:text-eureka-purple transition-colors">
                   {campaign.productName}
                 </a>
               </li>
               <li>
-                <a href={campaign.termsUrl} className="hover:text-amber-gold transition-colors">
+                <a href={campaign.termsUrl} className="hover:text-eureka-purple transition-colors">
                   Terms & Conditions
                 </a>
               </li>
               <li>
-                <a href={campaign.privacyUrl} className="hover:text-amber-gold transition-colors">
+                <a href={campaign.privacyUrl} className="hover:text-eureka-purple transition-colors">
                   Privacy Policy
                 </a>
               </li>
@@ -49,7 +49,7 @@ export function Footer() {
                 <li key={link.platform}>
                   <a
                     href={link.url}
-                    className="hover:text-amber-gold transition-colors"
+                    className="hover:text-eureka-purple transition-colors"
                     aria-label={`Eureka on ${link.platform}`}
                   >
                     {link.platform}

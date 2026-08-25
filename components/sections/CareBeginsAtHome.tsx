@@ -6,13 +6,14 @@ import { gsap, registerGSAP } from "@/lib/gsap";
 import { campaignData, t } from "@/data/campaign";
 import { useLocale } from "@/hooks/useLocale";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
-import { FadeIn } from "@/components/ui/FadeIn";
+import { revealMobile } from "@/lib/mobileReveal";
 
 registerGSAP();
 
 export function CareBeginsAtHome() {
   const sectionRef = useRef<HTMLElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const filmRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const { locale } = useLocale();
   const reducedMotion = useReducedMotion();
@@ -20,120 +21,160 @@ export function CareBeginsAtHome() {
 
   useGSAP(
     () => {
-      if (reducedMotion || !sectionRef.current || !trackRef.current) return;
+      if (!pinRef.current || !filmRef.current || !trackRef.current) return;
 
-      const panels = trackRef.current.querySelectorAll(".story-panel");
-      if (panels.length === 0) return;
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 768px)", () => {
+        if (reducedMotion) return;
+        const film = filmRef.current!;
+        const track = trackRef.current!;
+        const html = document.documentElement;
 
-      gsap.to(trackRef.current, {
-        x: () => -(trackRef.current!.scrollWidth - window.innerWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${trackRef.current!.scrollWidth}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-        },
+        const getDistance = () => Math.max(0, track.scrollWidth - film.clientWidth);
+        // Extra pan after the last slide is fully in view — still moving, no freeze.
+        const getOverrun = () => Math.round(film.clientWidth * 0.55);
+        const getTravel = () => getDistance() + getOverrun();
+
+        const tween = gsap.to(track, {
+          x: () => -getTravel(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top top",
+            end: () => `+=${getTravel()}`,
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        const st = tween.scrollTrigger;
+        if (!st) return;
+
+        const drag = {
+          pointerId: -1,
+          startX: 0,
+          startY: 0,
+          startScroll: 0,
+          locked: false as false | "x" | "y",
+        };
+
+        const scrubTo = (scroll: number) => {
+          const next = gsap.utils.clamp(st.start, st.end, scroll);
+          html.style.scrollBehavior = "auto";
+          st.scroll(next);
+          st.getTween()?.progress(1);
+        };
+
+        const endDrag = (e: PointerEvent) => {
+          if (drag.pointerId !== e.pointerId) return;
+          drag.pointerId = -1;
+          drag.locked = false;
+          film.classList.remove("is-dragging");
+          html.style.scrollBehavior = "";
+          if (film.hasPointerCapture(e.pointerId)) {
+            film.releasePointerCapture(e.pointerId);
+          }
+        };
+
+        const onPointerDown = (e: PointerEvent) => {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          if (!st.isActive) return;
+          drag.pointerId = e.pointerId;
+          drag.startX = e.clientX;
+          drag.startY = e.clientY;
+          drag.startScroll = st.scroll();
+          drag.locked = e.pointerType === "touch" ? false : "x";
+          if (drag.locked === "x") {
+            film.classList.add("is-dragging");
+            film.setPointerCapture(e.pointerId);
+          }
+        };
+
+        const onPointerMove = (e: PointerEvent) => {
+          if (drag.pointerId !== e.pointerId) return;
+          const dx = e.clientX - drag.startX;
+          const dy = e.clientY - drag.startY;
+
+          if (!drag.locked) {
+            if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+            if (Math.abs(dy) > Math.abs(dx)) {
+              drag.pointerId = -1;
+              return;
+            }
+            drag.locked = "x";
+            film.classList.add("is-dragging");
+            film.setPointerCapture(e.pointerId);
+          }
+
+          if (drag.locked !== "x") return;
+          e.preventDefault();
+          scrubTo(drag.startScroll - dx);
+        };
+
+        film.addEventListener("pointerdown", onPointerDown);
+        film.addEventListener("pointermove", onPointerMove);
+        film.addEventListener("pointerup", endDrag);
+        film.addEventListener("pointercancel", endDrag);
+        film.addEventListener("lostpointercapture", endDrag);
+
+        return () => {
+          film.removeEventListener("pointerdown", onPointerDown);
+          film.removeEventListener("pointermove", onPointerMove);
+          film.removeEventListener("pointerup", endDrag);
+          film.removeEventListener("pointercancel", endDrag);
+          film.removeEventListener("lostpointercapture", endDrag);
+          film.classList.remove("is-dragging");
+          html.style.scrollBehavior = "";
+        };
       });
+
+      mm.add("(max-width: 767px)", () => {
+        if (reducedMotion) return;
+        revealMobile(".care-copy", { stagger: 0, start: "top 88%" });
+        revealMobile(".care-slide", { stagger: 0.1, y: 22, start: "top 90%" });
+      });
+
+      return () => mm.revert();
     },
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
+
+  const slides = careBeginsAtHome.stories;
 
   return (
     <section
       id="care"
       ref={sectionRef}
-      className="relative bg-warm-white text-charcoal overflow-hidden"
+      className="care-section"
       aria-label="Cleaning begins at home"
     >
-      {/* Header */}
-      <div className="px-4 md:px-8 pt-24 md:pt-32 pb-12 max-w-4xl">
-        <FadeIn>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
-            {t(careBeginsAtHome.headline, locale)}
+      <div ref={pinRef} className={`care-pin ${reducedMotion ? "is-static" : ""}`}>
+        <div className="care-copy">
+          <h2>
+            {t(careBeginsAtHome.headline, locale)
+              .split("\n")
+              .map((line) => (
+                <span key={line}>{line}</span>
+              ))}
           </h2>
-          <div className="mt-6 space-y-2">
-            {careBeginsAtHome.supporting.map((line, i) => (
-              <p key={i} className="text-base md:text-lg text-charcoal/70">
-                {locale === "zh-Hant" ? line.zh : line.en}
-              </p>
-            ))}
-          </div>
-        </FadeIn>
-      </div>
-
-      {/* Story panels */}
-      {reducedMotion ? (
-        <div className="px-4 md:px-8 pb-24 space-y-8">
-          {careBeginsAtHome.stories.map((story) => (
-            <StoryCard key={story.id} story={story} locale={locale} />
-          ))}
         </div>
-      ) : (
-        <>
-          <div ref={trackRef} className="flex h-[70vh] md:h-[80vh] will-change-transform">
-            {careBeginsAtHome.stories.map((story) => (
-              <div
-                key={story.id}
-                className="story-panel flex-shrink-0 w-screen h-full relative"
-              >
-                <StoryCard story={story} locale={locale} fullScreen />
-              </div>
+
+        <div ref={filmRef} className="care-film">
+          <div ref={trackRef} className="care-track">
+            {slides.map((story) => (
+              <article key={story.id} className="care-slide">
+                <div className="care-slide-frame">
+                  <img src={story.image} alt={story.imageAlt} draggable={false} />
+                </div>
+                <h3>{locale === "zh-Hant" ? story.chineseTitle : story.title}</h3>
+                <p>{locale === "zh-Hant" ? story.chineseCopy : story.copy}</p>
+              </article>
             ))}
           </div>
-          <div className="h-[50vh]" aria-hidden="true" />
-        </>
-      )}
-
-      {/* Transition: dust trail hint */}
-      <div className="px-4 md:px-8 pb-16 text-center">
-        <FadeIn>
-          <div className="inline-flex items-center gap-3 text-sm text-charcoal/50">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-gold/40 to-transparent" />
-            <span className="tracking-widest uppercase text-xs">
-              {locale === "zh-Hant" ? "發現的時刻" : "The moment of discovery"}
-            </span>
-            <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-gold/40 to-transparent" />
-          </div>
-        </FadeIn>
+        </div>
       </div>
     </section>
-  );
-}
-
-function StoryCard({
-  story,
-  locale,
-  fullScreen = false,
-}: {
-  story: (typeof campaignData.careBeginsAtHome.stories)[number];
-  locale: "en" | "zh-Hant";
-  fullScreen?: boolean;
-}) {
-  return (
-    <div
-      className={`relative ${fullScreen ? "h-full" : "rounded-2xl overflow-hidden"} bg-charcoal/5`}
-    >
-      <div className={`relative ${fullScreen ? "h-[60%]" : "h-48 md:h-64"}`}>
-        <PlaceholderImage
-          src={story.image}
-          alt={story.imageAlt}
-          fill
-          className="object-cover"
-          label={story.title}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent" />
-      </div>
-      <div className={`${fullScreen ? "absolute bottom-0 inset-x-0 p-8 md:p-12" : "p-6"}`}>
-        <p className="text-xs uppercase tracking-[0.2em] text-amber-gold mb-2">
-          {locale === "zh-Hant" ? story.chineseTitle : story.title}
-        </p>
-        <p className={`font-medium leading-relaxed ${fullScreen ? "text-xl md:text-2xl text-warm-white" : "text-base text-charcoal"}`}>
-          {locale === "zh-Hant" ? story.chineseCopy : story.copy}
-        </p>
-      </div>
-    </div>
   );
 }
